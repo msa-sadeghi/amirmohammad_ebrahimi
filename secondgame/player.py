@@ -10,3 +10,13 @@ class Player(Sprite):
 
     def draw(self):
         screen.blit(self.image, self.rect)
+    def move(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT] and self.rect.left > 0:
+            self.rect.x -= 5
+        if keys[pygame.K_RIGHT] and self.rect.right < SCREEN_WIDTH:
+            self.rect.x += 5
+        if keys[pygame.K_UP] and self.rect.top > 0:
+            self.rect.y -= 5
+        if keys[pygame.K_DOWN] and self.rect.bottom < SCREEN_HEIGHT:
+            self.rect.y += 5
