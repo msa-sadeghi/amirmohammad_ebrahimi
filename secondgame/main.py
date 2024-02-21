@@ -2,12 +2,12 @@ from constants import *
 from player import Player
 
 from enemy import Monster
-from random import randint
+from random import randint, choice
 enemy_group = pygame.sprite.Group()
 level = 0
 
-
-
+FPS = 60
+clock = pygame.time.Clock()
 
 blue_monster = pygame.image.load("assets/blue_monster.png")
 green_monster = pygame.image.load("assets/green_monster.png")
@@ -28,16 +28,33 @@ def start_level():
 
 start_level()
 
+target_monster_type = randint(0,3)
+target_monster_image = all_monster_images[target_monster_type]
+target_monster_rect = target_monster_image.get_rect(centerx = SCREEN_WIDTH/2, bottom=100)
+
 def select_target():
     global target_monster_image, target_monster_type, target_monster_rect
-    target_monster_type = randint(0,3)
+    target_monster_type = choice(enemy_group.sprites()).type
     target_monster_image = all_monster_images[target_monster_type]
     target_monster_rect = target_monster_image.get_rect(centerx = SCREEN_WIDTH/2, bottom=100)
     
 select_target()
 
 def check_collisions():
-    pass
+    collided_monster = pygame.sprite.spritecollideany(my_player, enemy_group)
+    if collided_monster:
+        print("collided_monster.type", collided_monster.type)
+        print("target_monster_type", target_monster_type)
+        if collided_monster.type == target_monster_type:
+            collided_monster.remove(enemy_group)
+            
+            # TODO  اضافه کردن امتیاز
+            # TODO  پلی کردن صدا
+            if len(enemy_group) > 0:
+                select_target()
+            else:
+                pass
+                # TODO رفتن به مرحله بعد
 
 
 my_player = Player()
@@ -49,6 +66,7 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 running = False
+    check_collisions()
     screen.fill((0,0,0))
     screen.blit(target_monster_image, target_monster_rect)          
     my_player.draw()
@@ -56,3 +74,4 @@ while running:
     enemy_group.draw(screen)
     enemy_group.update()
     pygame.display.update()
+    clock.tick(FPS)
