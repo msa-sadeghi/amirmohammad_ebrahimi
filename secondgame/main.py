@@ -8,7 +8,7 @@ level = 0
 
 FPS = 60
 clock = pygame.time.Clock()
-
+score = 0
 blue_monster = pygame.image.load("assets/blue_monster.png")
 green_monster = pygame.image.load("assets/green_monster.png")
 yellow_monster = pygame.image.load("assets/yellow_monster.png")
@@ -53,8 +53,8 @@ def check_collisions():
             if len(enemy_group) > 0:
                 select_target()
             else:
-                pass
-                # TODO رفتن به مرحله بعد
+                enemy_group.empty()
+                start_level()
 
 
 my_player = Player()
