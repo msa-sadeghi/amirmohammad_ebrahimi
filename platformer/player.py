@@ -25,6 +25,16 @@ class Player(Sprite):
             if self.image_number >= len(self.images):
                 self.image_number = 0
     def update(self):
+        dx = 0
+        dy = 0
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            dx -= 5
+        if keys[pygame.K_RIGHT]:
+            dx += 5
+            
+        self.rect.x += dx
+        self.rect.y += dy
         if self.moving:
             self.animation()
         
