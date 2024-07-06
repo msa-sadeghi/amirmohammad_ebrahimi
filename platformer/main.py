@@ -1,15 +1,21 @@
 import pygame
 from world import World
+from player import Player
+from level_creator import world_data
+
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 pygame.init()
-world = World()
+world = World(world_data)
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 FPS = 60
 f = pygame.font.SysFont("arial", 28)
 welcome_text = f.render("welcome", True, (255,0,0))
 start_time = 0
+
+player = Player(100, 300)
+
 running = True
 while running:
     for event in pygame.event.get():
@@ -20,6 +26,7 @@ while running:
     if pygame.time.get_ticks() - start_time < 2000:
         screen.blit(welcome_text, (200,200))
         
-    
+    player.update()
+    player.draw(screen)
     pygame.display.update()
     clock.tick(FPS)
