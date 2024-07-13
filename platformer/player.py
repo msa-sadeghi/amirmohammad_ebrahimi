@@ -19,7 +19,8 @@ class Player(Sprite):
         self.image = self.images[self.image_number]
         screen.blit(self.image, self.rect)
     def animation(self):
-        if pygame.time.get_ticks() - self.last_update_time > 100:
+        
+        if pygame.time.get_ticks() - self.last_update_time > 100 and self.moving:
             self.last_update_time = pygame.time.get_ticks()
             self.image_number += 1
             if self.image_number >= len(self.images):
@@ -29,8 +30,10 @@ class Player(Sprite):
         dy = 0
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
+            self.moving = True
             dx -= 5
         if keys[pygame.K_RIGHT]:
+            self.moving = True
             dx += 5
             
         self.rect.x += dx
