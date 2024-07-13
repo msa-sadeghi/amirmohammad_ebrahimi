@@ -26,7 +26,7 @@ while running:
     if pygame.time.get_ticks() - start_time < 2000:
         screen.blit(welcome_text, (200,200))
         
-    player.update()
+    player.update(world.tiles)
     player.draw(screen)
     pygame.display.update()
     clock.tick(FPS)
