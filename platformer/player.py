@@ -17,6 +17,7 @@ class Player(Sprite):
         self.moving = False
         self.flip = False
         self.vel_y =  0
+        self.jumped = False
     def draw(self, screen):
         self.image = self.images[self.image_number]
         self.image = pygame.transform.flip(self.image, self.flip, False)
@@ -41,16 +42,25 @@ class Player(Sprite):
             dx += 5
         else:
             self.moving = False 
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_SPACE] and not self.jumped:
             self.vel_y = -15
+            self.jumped = True
+            
+        # if self.vel_y == -1:
+        #     self.jumped = False   
+            
         dy += self.vel_y
         self.vel_y += 1   
         
         
         for t in tiles:
+            if t[1].colliderect(self.rect.x + dx, self.rect.y, self.rect.size[0], self.rect.size[1]):
+                dx = 0
             if t[1].colliderect(self.rect.x, self.rect.y + dy, self.rect.size[0], self.rect.size[1]):
                 dy = 0
                 self.vel_y = 0
+                self.jumped = False
+            
         
         
          
