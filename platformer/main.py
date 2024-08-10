@@ -6,7 +6,8 @@ from level_creator import world_data
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 pygame.init()
-world = World(world_data)
+enemy_group = pygame.sprite.Group()
+world = World(world_data, enemy_group)
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 FPS = 60
@@ -28,5 +29,7 @@ while running:
         
     player.update(world.tiles)
     player.draw(screen)
+    enemy_group.update()
+    enemy_group.draw(screen)
     pygame.display.update()
     clock.tick(FPS)

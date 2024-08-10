@@ -1,6 +1,7 @@
 import pygame
+from enemy import Enemy
 class World:
-    def __init__(self, world_data):
+    def __init__(self, world_data, enemy_group):
         self.tiles = []
         self.image = pygame.image.load("assets/sky.png")
         for i in range(len(world_data)):
@@ -15,6 +16,9 @@ class World:
                     img = pygame.transform.scale(img, (50, 50))
                     rect = img.get_rect(topleft = (j * 50,i * 50))
                     self.tiles.append((img, rect))
+                if world_data[i][j] == 3:
+                    Enemy(j * 50,i * 50 + 15, enemy_group)
+                    
         
     def draw(self, screen):
         screen.blit(self.image, (0,0))
