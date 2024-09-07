@@ -24,6 +24,7 @@
 # else:
 #     print("GPU is not available")
 import pygame
+from castle import Castle
 pygame.init()
 screen = pygame.display.set_mode()
 screen_width = screen.get_width()
@@ -33,13 +34,21 @@ fps = 60
 clock = pygame.time.Clock()
 font = pygame.font.SysFont('arial', 32)
 fps_text = font.render(f"fps:{fps}", True, (255, 0,0))
+bg_image = pygame.image.load("assets/bg.png")
+
+bg_image = pygame.transform.scale(bg_image, (screen_width, screen_height))
+
+my_castle = Castle(1000, 50, screen_width - 350, screen_height - 400)
+
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 running = False
-    screen.fill((0,0,0))
+    # screen.fill((0,0,0))
+    screen.blit(bg_image, (0,0))
+    my_castle.draw(screen)
     fps_text = font.render(f"fps:{clock.get_fps()}", True, (255, 0,0))
     screen.blit(fps_text,(10,10))
     pygame.display.update()
